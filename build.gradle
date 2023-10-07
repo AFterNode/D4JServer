@@ -25,6 +25,10 @@ allprojects {
     }
 }
 
+ext {
+    discord4j = "3.2.5"
+}
+
 subprojects {
     version = parent.version
 }
@@ -34,14 +38,14 @@ dependencies {
     testImplementation platform('org.junit:junit-bom:5.9.1')
     testImplementation 'org.junit.jupiter:junit-jupiter'
 
-    implementation project(":d4jserver-api")
+    include project(":d4jserver-api")
 
     // region: Resolver
-    compileOnly 'com.discord4j:discord4j-core:3.2.5'
-    compileOnly 'org.apache.commons:commons-lang3:3.13.0'
     // endregion
 
     // region: Bundled
+    include 'com.discord4j:discord4j-core:' + discord4j
+    include 'org.apache.commons:commons-lang3:3.13.0'
     include 'com.google.code.gson:gson:2.10.1'
 
     include 'org.apache.logging.log4j:log4j-core:2.20.0'
@@ -57,6 +61,11 @@ dependencies {
     // endregion
 }
 
+jar.manifest {
+    attributes "Main-Class": "cn.afternode.d4jserver.Main"
+
+}
+
 test {
     useJUnitPlatform()
 }
@@ -68,4 +77,5 @@ shadowJar {
 gitProperties {
     keys = ["git.branch", "git.build.user.name", "git.build.version",
             "git.commit.id", "git.commit.id.abbrev", "git.commit.describe", "git.commit.message.full", "git.tags"]
+    customProperty "d4j.version", discord4j
 }

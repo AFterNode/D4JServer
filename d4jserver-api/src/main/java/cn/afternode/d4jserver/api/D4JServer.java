@@ -24,5 +24,9 @@ public interface D4JServer {
 
     boolean resolvePluginDependency(ClassLoader loader, List<String> dependencies, D4JServerPlugin meta);
 
+    String getVersion();
+
+    String getName();
+
     void shutdown();
 }

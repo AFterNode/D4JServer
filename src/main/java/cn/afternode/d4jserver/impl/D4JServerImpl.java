@@ -12,8 +12,10 @@ import cn.afternode.d4jserver.api.event.eventapi.EventManager;
 import cn.afternode.d4jserver.config.D4JServerConfig;
 import cn.afternode.d4jserver.plugin.DependencyManager;
 import cn.afternode.d4jserver.plugin.PluginManagerImpl;
+import cn.afternode.d4jserver.utils.GitUtils;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import discord4j.core.CoreResources;
 import discord4j.core.DiscordClient;
 import discord4j.core.GatewayDiscordClient;
 import lombok.Getter;
@@ -34,6 +36,7 @@ public class D4JServerImpl implements D4JServer {
     @Getter
     private static D4JServerImpl instance;
 
+    @Getter
     private final Logger logger = LogManager.getLogger("Main");
     private final Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
@@ -57,7 +60,7 @@ public class D4JServerImpl implements D4JServer {
             running = true;
             instance = this;
 
-            logger.info("Starting D4JServer");
+            logger.info("Starting " + getName());
             logger.info("VM: " + System.getProperty("java.name") + System.getProperty("java.version"));
 
 
@@ -164,6 +167,16 @@ public class D4JServerImpl implements D4JServer {
     @Override
     public boolean resolvePluginDependency(ClassLoader loader, List<String> dependencies, D4JServerPlugin meta) {
         return dependencyManager.resolve(loader, dependencies, "Plugin-" + meta.name());
+    }
+
+    @Override
+    public String getVersion() {
+        return GitUtils.getVersion();
+    }
+
+    @Override
+    public String getName() {
+        return "D4JServer " + getVersion() + " (git-" + GitUtils.getBranch() + "-" + GitUtils.getAbbrev() + ") Discord4J " + GitUtils.getD4jVersion();
     }
 
     @Override
