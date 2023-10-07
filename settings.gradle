@@ -1,0 +1,4 @@
+rootProject.name = 'D4JServer'
+include 'd4jserver-api'
+include 'd4jserver-test-plugin'
+
