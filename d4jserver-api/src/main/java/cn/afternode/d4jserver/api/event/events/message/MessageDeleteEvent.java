@@ -5,21 +5,45 @@ import discord4j.core.object.entity.Guild;
 import discord4j.core.object.entity.Message;
 import discord4j.core.object.entity.channel.MessageChannel;
 import lombok.Getter;
+import org.jetbrains.annotations.Nullable;
+import reactor.core.publisher.Mono;
+
+import java.util.Optional;
 
 /**
  * @see discord4j.core.event.domain.message.MessageDeleteEvent
  */
-@Getter
-public class MessageDeleteEvent implements Event {
-    private final Message message;
-    private final Guild guild;
-    private final MessageChannel channel;
+public final class MessageDeleteEvent implements Event {
+    private final discord4j.core.event.domain.message.MessageDeleteEvent raw;
 
     public MessageDeleteEvent(discord4j.core.event.domain.message.MessageDeleteEvent raw, Guild guild) {
         if (raw.getMessage().isEmpty()) throw new NullPointerException("Message is null");
 
-        message = raw.getMessage().get();
-        channel = raw.getChannel().block();
-        this.guild = guild;
+        this.raw = raw;
+    }
+
+    @Nullable
+    public Message getMessage() {
+        return raw.getMessage().get();
+    }
+
+    public Optional<Message> getMessageOptional() {
+        return raw.getMessage();
+    }
+
+    public Guild getGuildAwait() {
+        return raw.getGuild().block();
+    }
+
+    public Mono<Guild> getGuild() {
+        return raw.getGuild();
+    }
+
+    public MessageChannel getChannelAwait() {
+        return raw.getChannel().block();
+    }
+
+    public Mono<MessageChannel> getChannel() {
+        return raw.getChannel();
     }
 }

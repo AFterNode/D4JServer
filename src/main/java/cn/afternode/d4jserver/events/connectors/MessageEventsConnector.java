@@ -92,7 +92,7 @@ public class MessageEventsConnector extends SubConnector {
             if (D4JServerAPI.getGuildManager().isGuildAllowed(g)) {
                 cn.afternode.d4jserver.api.event.events.message.MessageUpdateEvent ec = (cn.afternode.d4jserver.api.event.events.message.MessageUpdateEvent) D4JServerAPI.getEventManager().call(new cn.afternode.d4jserver.api.event.events.message.MessageUpdateEvent(event, g));
                 if (ec.isCancelled()) {
-                    ec.getMessage().edit(MessageEditSpec.builder().content(Possible.of(Optional.of(ec.getOld().getContent()))).build()).block();
+                    ec.getMessageAwait().edit(MessageEditSpec.builder().content(Possible.of(Optional.of(ec.getOld().orElseThrow().getContent()))).build()).block();
                 }
             }
         } catch (Throwable t) {
