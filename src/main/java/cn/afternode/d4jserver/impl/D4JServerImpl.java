@@ -7,6 +7,7 @@ import cn.afternode.d4jserver.api.command.CommandManager;
 import cn.afternode.d4jserver.api.plugin.D4JServerPlugin;
 import cn.afternode.d4jserver.api.plugin.Plugin;
 import cn.afternode.d4jserver.api.plugin.PluginManager;
+import cn.afternode.d4jserver.db.DatabaseManager;
 import cn.afternode.d4jserver.events.EventConnector;
 import cn.afternode.d4jserver.api.event.eventapi.EventManager;
 import cn.afternode.d4jserver.config.D4JServerConfig;
@@ -54,6 +55,8 @@ public class D4JServerImpl implements D4JServer {
     private D4JServerConfig config;
 
     private EventConnector eventConnector;
+    @Getter
+    private DatabaseManager databaseManager;
 
     public void launch(String[] args) {
         try {
@@ -87,6 +90,12 @@ public class D4JServerImpl implements D4JServer {
                     List.of("org.apache.commons:commons-lang3:3.13.0"),
                     "D4JServer");
             if (!result) throw new RuntimeException("Dependencies resolve failed");
+            // endregion
+
+            // region: Database
+            databaseManager = new DatabaseManager(config.getDatabaseConfig());
+            databaseManager.connect();
+            databaseManager.init();
             // endregion
 
             // region: Initialization

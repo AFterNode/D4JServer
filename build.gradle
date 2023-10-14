@@ -41,6 +41,8 @@ dependencies {
     include project(":d4jserver-api")
 
     // region: Resolver
+    implementation 'com.h2database:h2:2.2.224'
+    implementation 'com.mysql:mysql-connector-j:8.1.0'
     // endregion
 
     // region: Bundled
@@ -72,6 +74,11 @@ test {
 
 shadowJar {
     configurations = [project.configurations.include]
+
+    configurations {
+        exclude "com.h2database:h2"
+        exclude "com.mysql:mysql-connector-j"
+    }
 }
 
 gitProperties {

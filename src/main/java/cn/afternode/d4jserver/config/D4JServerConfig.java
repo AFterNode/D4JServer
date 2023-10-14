@@ -26,4 +26,7 @@ public class D4JServerConfig {
             new MavenRepositoryConfig("central", "https://repo1.maven.org/maven2/"),
             new MavenRepositoryConfig("jitpack", "https://jitpack.io")
     ));
+
+    @SerializedName("database")
+    private DatabaseConfig databaseConfig = new DatabaseConfig();
 }
