@@ -10,6 +10,8 @@ public interface PluginManager {
 
     Plugin getPlugin(String name);
 
+    Plugin[] getPlugins();
+
     boolean isEnabled(String name);
 
     void shutdown();

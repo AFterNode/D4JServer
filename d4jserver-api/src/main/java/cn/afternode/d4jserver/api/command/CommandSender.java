@@ -42,6 +42,11 @@ public interface CommandSender {
      */
     @Nullable Guild getGuild();
 
+    /**
+     * -1 if this sender is the console
+     */
+    long getId();
+
     String getName();
 
 }

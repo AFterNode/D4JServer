@@ -8,6 +8,7 @@ import cn.afternode.d4jserver.api.event.eventapi.EventTarget;
 import cn.afternode.d4jserver.api.event.eventapi.types.Priority;
 import cn.afternode.d4jserver.api.event.events.message.MessageReceiveEvent;
 import cn.afternode.d4jserver.commands.HelpCommand;
+import cn.afternode.d4jserver.commands.PluginCommand;
 import discord4j.core.object.entity.Member;
 import discord4j.core.object.entity.channel.MessageChannel;
 import discord4j.core.spec.MessageCreateSpec;
@@ -24,6 +25,7 @@ public class CommandManagerImpl implements CommandManager {
 
     public void init() {
         register(new HelpCommand());
+        register(new PluginCommand());
     }
 
     public void register(CommandExecutor handler) {

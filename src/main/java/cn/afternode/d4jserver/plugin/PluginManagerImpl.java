@@ -96,6 +96,11 @@ public class PluginManagerImpl implements PluginManager {
     }
 
     @Override
+    public Plugin[] getPlugins() {
+        return plugins.values().toArray(new Plugin[0]);
+    }
+
+    @Override
     public boolean isEnabled(String name) {
         Plugin p = getPlugin(name);
         return p == null || !p.isEnabled();

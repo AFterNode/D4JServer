@@ -67,6 +67,11 @@ public class MemberCommandSender implements CommandSender {
     }
 
     @Override
+    public long getId() {
+        return member.getId().asLong();
+    }
+
+    @Override
     public String getName() {
         return member.getGlobalName().orElse(member.getDisplayName());
     }
