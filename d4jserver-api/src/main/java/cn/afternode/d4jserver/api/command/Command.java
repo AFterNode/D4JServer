@@ -12,4 +12,5 @@ public @interface Command {
     String[] alias() default {};
     String description() default "";
     String usage() default "";
+    String permission() default "";
 }

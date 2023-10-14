@@ -1,6 +1,7 @@
 package cn.afternode.d4jserver.db;
 
 import cn.afternode.d4jserver.config.DatabaseConfig;
+import lombok.Getter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -10,6 +11,7 @@ public class DatabaseManager {
     private final DatabaseConfig config;
     private final Logger logger = LogManager.getLogger("Database");
 
+    @Getter
     private Connection connection;
 
     public DatabaseManager(DatabaseConfig config) {
@@ -30,10 +32,9 @@ public class DatabaseManager {
         logger.info("Initializing database");
 
         Statement stmt = connection.createStatement();
+        stmt.execute("CREATE TABLE UserPerm(id bigint, perm text)");
+        stmt.execute("CREATE TABLE Perm(name text, parent text)");
         stmt.close();
     }
 
-    public PreparedStatement prepare(String sql) throws SQLException {
-        return connection.prepareStatement(sql);
-    }
 }

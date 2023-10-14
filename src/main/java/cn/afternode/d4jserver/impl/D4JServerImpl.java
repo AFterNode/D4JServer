@@ -4,6 +4,7 @@ import cn.afternode.d4jserver.api.D4JServer;
 import cn.afternode.d4jserver.api.D4JServerAPI;
 import cn.afternode.d4jserver.api.GuildManager;
 import cn.afternode.d4jserver.api.command.CommandManager;
+import cn.afternode.d4jserver.api.permission.PermissionManager;
 import cn.afternode.d4jserver.api.plugin.D4JServerPlugin;
 import cn.afternode.d4jserver.api.plugin.Plugin;
 import cn.afternode.d4jserver.api.plugin.PluginManager;
@@ -51,6 +52,7 @@ public class D4JServerImpl implements D4JServer {
     private PluginManager pluginManager;
     private CommandManagerImpl commandManager;
     private DependencyManager dependencyManager;
+    private PermissionManager permissionManager;
     @Getter
     private D4JServerConfig config;
 
@@ -96,6 +98,8 @@ public class D4JServerImpl implements D4JServer {
             databaseManager = new DatabaseManager(config.getDatabaseConfig());
             databaseManager.connect();
             databaseManager.init();
+
+            permissionManager = new PermissionManagerImpl();
             // endregion
 
             // region: Initialization
@@ -171,6 +175,11 @@ public class D4JServerImpl implements D4JServer {
     @Override
     public CommandManager getCommandManager() {
         return commandManager;
+    }
+
+    @Override
+    public PermissionManager getPermissionManager() {
+        return permissionManager;
     }
 
     @Override
